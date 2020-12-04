@@ -2,72 +2,54 @@
 
 using namespace std;
 
-struct Node {
+struct BstNode {
     int data;
-    Node *next;
+    BstNode *left;
+    BstNode *right;
 };
 
-Node *head;
-
-void Insert(int x) { //insert the integer at the beginning of the list
-    Node *temp = new Node();
-    temp->data = x;
-    temp->next = head;
-    head = temp;
+BstNode *GetNewNode(int data) {
+    auto *newNode = new BstNode();
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
 }
 
-void Print() {
-    Node *temp = head;
-    cout << "List is: ";
-    while (temp != NULL) {
-        cout << temp->data << " ";
-        temp = temp->next;
+BstNode *Insert(BstNode *root, int data) { //insert the data at appropriate position in the tree
+    if (root == NULL) {
+        root = GetNewNode(data);
+        return root;
+    } else if (data <= root->data) {
+        root->left = Insert(root->left, data);
+    } else {
+        root->right = Insert(root->right, data);
     }
-    cout << "\n";
+    return root;
 }
 
-void Delete(int n) { //delete a node at position n
-    Node *temp1 = head;
-    if (n == 1) {
-        head = temp1->next; //head now points to second node
-        delete temp1;
-        return;
-    }
-    for (int i = 0; i < n - 2; i++) {
-        temp1 = temp1->next; //temp1 points to (n - 1)th position
-    }
-    Node *temp2 = temp1->next; //nth node
-    temp1->next = temp2->next; //(n + 1)th node
-    delete temp2; //delete temp2
-}
-
-void Reverse() {
-    Node *current, *prev, *next;
-    current = head;
-    prev = NULL;
-    while (current != NULL) {
-        next = current->next;
-        current->next = prev;
-        prev = current;
-        current = next;
-    }
-    head = prev;
+bool Search(BstNode *root, int data) {
+    if (root == NULL) return false;
+    else if (root->data == data) return true;
+    else if (data <= root->data) return Search(root->left, data);
+    else return Search(root->right, data);
 }
 
 int main() {
-    head = NULL; //empty list
-    Insert(2);
-    Insert(4);
-    Insert(6);
-    Insert(5);
-    Print();
-    Reverse();
-    Print();
-    int n;
-    cout << "Enter a position of element to delete: " << endl;
-    cin >> n;
-    Delete(n);
-    Print();
+    BstNode *root = NULL; //creating an empty tree
+    root = Insert(root, 15);
+    root = Insert(root, 10);
+    root = Insert(root, 20);
+    root = Insert(root, 25);
+    root = Insert(root, 8);
+    root = Insert(root, 12);
+    int number;
+    cout << "Enter number to search" << endl;
+    cin >> number;
+    if (Search(root, number)) {
+        cout << "Found" << endl;
+    } else {
+        cout << "Not found" << endl;
+    }
 
     return 0;
 }
