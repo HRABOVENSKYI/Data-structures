@@ -41,12 +41,27 @@ void Delete(int n) { //delete a node at position n
     delete temp2; //delete temp2
 }
 
+void Reverse() {
+    Node *current, *prev, *next;
+    current = head;
+    prev = NULL;
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
+}
+
 int main() {
     head = NULL; //empty list
     Insert(2);
     Insert(4);
     Insert(6);
     Insert(5);
+    Print();
+    Reverse();
     Print();
     int n;
     cout << "Enter a position of element to delete: " << endl;
