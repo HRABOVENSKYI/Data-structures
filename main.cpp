@@ -15,8 +15,7 @@ Node *Insert(Node *root, char data) {
         root = new Node();
         root->data = data;
         root->left = root->right = NULL;
-    }
-    else if (data <= root->data) root->left = Insert(root->left, data);
+    } else if (data <= root->data) root->left = Insert(root->left, data);
     else root->right = Insert(root->right, data);
     return root;
 }
@@ -36,7 +35,39 @@ void LevelOrder(Node *root) {
     }
 }
 
+//function to print nodes in a binary tree preorder
+void Preorder(Node *root) {
+    if (root == NULL) return;
+    cout << root->data << " ";
+    Preorder(root->left);
+    Preorder(root->right);
+}
+
+//function to print nodes in a binary tree inorder
+void Inorder(Node *root) {
+    if (root == NULL) return;
+    Inorder(root->left);
+    cout << root->data << " ";
+    Inorder(root->right);
+}
+
+//function to print nodes in a binary tree postorder
+void Postorder(Node *root) {
+    if (root == NULL) return;
+    Postorder(root->left);
+    Postorder(root->right);
+    cout << root->data << " ";
+}
+
 int main() {
+    /* Creating an example tree
+                  M
+                 / \
+                B   Q
+               / \   \
+              A   C   Z
+    */
+
     Node *root = NULL;
     root = Insert(root, 'M');
     root = Insert(root, 'B');
@@ -47,6 +78,18 @@ int main() {
 
     cout << "Print nodes in level order: ";
     LevelOrder(root);
+    cout << endl;
+
+    cout << "Print nodes in preorder: ";
+    Preorder(root);
+    cout << endl;
+
+    cout << "Print nodes in inorder: ";
+    Inorder(root);
+    cout << endl;
+
+    cout << "Print nodes in postorder: ";
+    Postorder(root);
     cout << endl;
 
     return 0;
