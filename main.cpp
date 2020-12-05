@@ -56,6 +56,11 @@ int FindMax(BstNode *root) {
     return root->data;
 }
 
+int FindHeight(BstNode *root) {
+    if (root == NULL) return -1;
+    return max(FindHeight(root->left), FindHeight(root->right)) + 1;
+}
+
 int main() {
     BstNode *root = NULL; //creating an empty tree
     root = Insert(root, 15);
@@ -65,6 +70,11 @@ int main() {
     root = Insert(root, 8);
     root = Insert(root, 12);
 
+    cout << "Min element is: " << FindMin(root) << endl;
+    cout << "Max element is: " << FindMax(root) << endl;
+
+    cout << "Height of the tree is " << FindHeight(root) << endl;
+
     int number;
     cout << "Enter number to search" << endl;
     cin >> number;
@@ -73,9 +83,6 @@ int main() {
     } else {
         cout << "Not found" << endl;
     }
-
-    cout << "Min element is: " << FindMin(root) << endl;
-    cout << "Max element is: " << FindMax(root) << endl;
 
     return 0;
 }
