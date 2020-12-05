@@ -34,6 +34,28 @@ bool Search(BstNode *root, int data) {
     else return Search(root->right, data);
 }
 
+int FindMin(BstNode *root) {
+    if (root == NULL) {
+        cout << "Error: tree is empty" << endl;
+        return -1;
+    }
+    while (root->left != NULL) {
+        root = root->left;
+    }
+    return root->data;
+}
+
+int FindMax(BstNode *root) {
+    if (root == NULL) {
+        cout << "Error: tree is empty" << endl;
+        return -1;
+    }
+    while (root->right != NULL) {
+        root = root->right;
+    }
+    return root->data;
+}
+
 int main() {
     BstNode *root = NULL; //creating an empty tree
     root = Insert(root, 15);
@@ -42,6 +64,7 @@ int main() {
     root = Insert(root, 25);
     root = Insert(root, 8);
     root = Insert(root, 12);
+
     int number;
     cout << "Enter number to search" << endl;
     cin >> number;
@@ -50,6 +73,9 @@ int main() {
     } else {
         cout << "Not found" << endl;
     }
+
+    cout << "Min element is: " << FindMin(root) << endl;
+    cout << "Max element is: " << FindMax(root) << endl;
 
     return 0;
 }
