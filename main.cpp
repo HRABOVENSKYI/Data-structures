@@ -59,22 +59,55 @@ void Postorder(Node *root) {
     cout << root->data << " ";
 }
 
+bool IsSubtreeLesser(Node *root, int value) {
+    if (root == NULL) return true;
+    if (root->data <= value
+    && IsSubtreeLesser(root->left, value)
+    && IsSubtreeLesser(root->right, value))
+        return true;
+    else
+        return false;
+}
+
+bool IsSubtreeGreater(Node *root, int value) {
+    if (root == NULL) return true;
+    if (root->data > value
+        && IsSubtreeGreater(root->left, value)
+        && IsSubtreeGreater(root->right, value))
+        return true;
+    else
+        return false;
+}
+
+bool IsBinarySearchTree(Node *root) {
+    if (root == NULL) return true;
+    if (IsSubtreeLesser(root->left, root->data)
+    && IsSubtreeGreater(root->right, root->data)
+    && IsBinarySearchTree(root->left)
+    && IsBinarySearchTree(root->right))
+        return true;
+    else
+        return false;
+}
+
 int main() {
     /* Creating an example tree
-                  M
+                  7
                  / \
-                B   Q
-               / \   \
-              A   C   Z
+                4   9
+               / \
+              1   6
+               \
+                4
     */
 
     Node *root = NULL;
-    root = Insert(root, 'M');
-    root = Insert(root, 'B');
-    root = Insert(root, 'Q');
-    root = Insert(root, 'Z');
-    root = Insert(root, 'A');
-    root = Insert(root, 'C');
+    root = Insert(root, '7');
+    root = Insert(root, '4');
+    root = Insert(root, '9');
+    root = Insert(root, '1');
+    root = Insert(root, '6');
+    root = Insert(root, '4');
 
     cout << "Print nodes in level order: ";
     LevelOrder(root);
@@ -91,6 +124,11 @@ int main() {
     cout << "Print nodes in postorder: ";
     Postorder(root);
     cout << endl;
+
+    if (IsBinarySearchTree(root))
+        cout << "Is binary search tree" << endl;
+    else
+        cout << "Isn't binary search tree";
 
     return 0;
 }
